@@ -91,25 +91,60 @@ class HaaLimits2D(HaaLimits):
             #    p4 = [-0.01,-100,100],
             #)
 
-            erf1 = Models.Erf('erf1',
-                x = 'y',
-                erfScale = [0.05,0,10],
-                erfShift = [70,10,200],
-            )
-            nameE1 = 'erf1{}'.format('_'+tag if tag else '')
-            erf1.build(self.workspace,nameE1)
+#            erf1 = Models.Erf('erf1',
+#                x = 'y',
+#                erfScale = [0.05,0,10],
+#                erfShift = [70,10,200],
+#            )
+#            nameE1 = 'erf1{}'.format('_'+tag if tag else '')
+#            erf1.build(self.workspace,nameE1)
 
             cont1 = Models.Exponential('conty1',
                 x = 'y',
-                lamb = [-0.05,-1,0],
+                lamb = [-0.015917105481197694,-0.1,0],
             )
             nameC1 = 'conty1{}'.format('_'+tag if tag else '')
             cont1.build(self.workspace,nameC1)
 
-            bg = Models.Prod('bg',
-                nameE1,
-                nameC1,
+            cont2 = Models.Exponential('conty2',
+                x = 'y',
+                lamb = [-0.08200651250658608,-0.1,-0.01],
             )
+            nameC2 = 'conty2{}'.format('_'+tag if tag else '')
+            cont2.build(self.workspace,nameC2)
+
+            bg = Models.Sum('bg',
+                **{
+                    nameC1     : [0.9,0,1],
+                    nameC2     : [0.5,0,1],
+                    'recursive': True,
+                }
+            )
+            nameSum = 'bg_{}'.format(region)
+            bg.build(self.workspace,nameSum)
+#
+#            bg = Models.Prod('bg',
+#                nameE1,
+#                nameSum,
+#            )
+
+#            pLaw = Models.PowerLaw('powerLaw',
+#                x = 'y',
+#                c = [0.5,0.01,1],
+#            )
+#            namePL = 'powerLaw{}'.format('_'+tag if tag else '')
+#            pLaw.build(self.workspace,namePL)
+#
+#            bg = Models.Prod('bg',
+#                nameE1,
+#                namePL,
+#            )
+#            bg = Models.Exponential('bg',
+#                x = 'y',
+#                lamb = [-0.0223,-0.1,0],
+#            )
+#            namebg = 'bg{}'.format('_'+tag if tag else '')
+#            bg.build(self.workspace,namebg)
         else:
             # Landau only
             #bg = Models.Landau('bg',
