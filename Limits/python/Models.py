@@ -569,6 +569,21 @@ class DoubleCrystalBallSpline(ModelSpline):
         self.wsimport(ws, doubleCB)
         self.params = [meanName,sigmaName,a1Name,n1Name,a2Name,n2Name]
 
+class PowerLaw(Model):
+
+    def __init__(self,name,**kwargs):
+        super(PowerLaw,self).__init__(name,**kwargs)
+
+    def build(self,ws,label):
+        print "BALLS"
+        logging.debug('Building {}'.format(label))
+        c = self.kwargs.get('c',  [0.5,0,1])
+        cName = c if isinstance(c,str) else 'c_{0}'.format(label)
+        if not isinstance(c,str): ws.factory('{0}[{1}, {2}, {3}]'.format(cName,*c))
+        powerLaw = ROOT.PowerLaw(label, label, ws.arg(self.x), ws.arg(cName) )
+        self.wsimport(ws,powerLaw) 
+        self.params = [cName]
+
 class DoubleSidedGaussian(Model):
 
     def __init__(self,name,**kwargs):
