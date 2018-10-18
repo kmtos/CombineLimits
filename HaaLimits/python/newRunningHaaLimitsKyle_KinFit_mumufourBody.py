@@ -21,8 +21,8 @@ XRANGE = [2.5, 30]
 YRANGE = [0, 1200]
 UPSILONRANGE = [8,11]
 AMASSES = ['3p6',4,5,6,7,9,11,13,15,17,19,21]
-HMASSES = [[125,300,750]
-subdirectoryName='mumufourBody_SEP5_DG/'
+HMASSES = [125,300,750]
+subdirectoryName='mumufourBody_SEP5_DG_WithQCD/'
 name = 'mmmt_mm_parametric'
 IFCONTROL = True
 
@@ -85,7 +85,7 @@ def GetPPData(dictionary,xRange=[], yRange=[], rooDataSet=False):
       getTH1F(SingleMu_FakeRateUP,      xMin=XRANGE[0], xMax=XRANGE[1], shift='FakeUp',   name='dataNoSig', dic=dictionary, region='PP')
 
 def GetPPSignal(dictionary,xRange=[],yRange=[], rooDataSet=False):
-  f = ROOT.TFile.Open("/eos/cms/store/user/ktos/ShapeDifferences/FINAL_AllRooDataSet_MedIsoMu2_TauDMMedIso_SEP2.root")
+  f = ROOT.TFile.Open("/eos/cms/store/user/ktos/ShapeDifferences/FINAL_AllRooDataSet_MedIsoMu2_TauDMMedIso_SEP2_WithQCD.root")
 
   for hMass in HMASSES:
      if  hMass== 125: yRange = [20, 150]
@@ -100,6 +100,12 @@ def GetPPSignal(dictionary,xRange=[],yRange=[], rooDataSet=False):
        h_IsoUP      = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMMedIso_SEP2_IsoUP_Plots_fourBody")
        h_PileupDOWN = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMMedIso_SEP2_PileupDOWN_Plots_fourBody")
        h_PileupUP   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMMedIso_SEP2_PileupUP_Plots_fourBody")
+       h_QCD1   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMMedIso_SEP2_QCD1_Plots_fourBody")
+       h_QCD2   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMMedIso_SEP2_QCD2_Plots_fourBody")
+       h_QCD3   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMMedIso_SEP2_QCD3_Plots_fourBody")
+       h_QCD4   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMMedIso_SEP2_QCD4_Plots_fourBody")
+       h_QCD6   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMMedIso_SEP2_QCD6_Plots_fourBody")
+       h_QCD8   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMMedIso_SEP2_QCD8_Plots_fourBody")
 
        if not rooDataSet:
           getTH1F(h_Central,    xMin=0, xMax=30, shift='',           name="HToAAH" + str(hMass) + "A" + str(aMass), dic=dictionary, region='PP')
@@ -117,6 +123,12 @@ def GetPPSignal(dictionary,xRange=[],yRange=[], rooDataSet=False):
           h_IsoUP     = getDataset(h_IsoUP,      selection='', xRange=[0,30], yRange=yRange)
           h_PileupDOWN= getDataset(h_PileupDOWN, selection='', xRange=[0,30], yRange=yRange)
           h_PileupUP  = getDataset(h_PileupUP,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD1  = getDataset(h_QCD1,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD2  = getDataset(h_QCD2,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD3  = getDataset(h_QCD3,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD4  = getDataset(h_QCD4,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD6  = getDataset(h_QCD6,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD8  = getDataset(h_QCD8,   selection='', xRange=[0,30], yRange=yRange)
           dictionary['PP']['']["HToAAH" + str(hMass) + "A" + str(aMass)]           = h_Central
           dictionary['PP']['IDUp']["HToAAH" + str(hMass) + "A" + str(aMass)]       = h_IDUP
           dictionary['PP']['IDDown']["HToAAH" + str(hMass) + "A" + str(aMass)]     = h_IDDOWN
@@ -124,6 +136,12 @@ def GetPPSignal(dictionary,xRange=[],yRange=[], rooDataSet=False):
           dictionary['PP']['IsoDown']["HToAAH" + str(hMass) + "A" + str(aMass)]    = h_IsoDOWN
           dictionary['PP']['PileupUp']["HToAAH" + str(hMass) + "A" + str(aMass)]   = h_PileupUP
           dictionary['PP']['PileupDown']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_PileupDOWN
+          dictionary['PP']['QCD1']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD1
+          dictionary['PP']['QCD2']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD2
+          dictionary['PP']['QCD3']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD3
+          dictionary['PP']['QCD4']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD4
+          dictionary['PP']['QCD6']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD6
+          dictionary['PP']['QCD8']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD8
 
 
 def GetFPData(dictionary,xRange=[],yRange=[], rooDataSet=False):
@@ -148,7 +166,7 @@ def GetFPData(dictionary,xRange=[],yRange=[], rooDataSet=False):
       getTH1F(SingleMu_RegionB, xMin=XRANGE[0], xMax=XRANGE[1], shift='FakeDown', name='dataNoSig', dic=dictionary, region='FP')
 
 def GetFPSignal(dictionary,xRange=[], yRange=[], rooDataSet=False):
-  f = ROOT.TFile.Open("/eos/cms/store/user/ktos/ShapeDifferences/FINAL_AllRooDataSet_MedIsoMu2_TauDMAntiMedIso_SEP2.root")
+  f = ROOT.TFile.Open("/eos/cms/store/user/ktos/ShapeDifferences/FINAL_AllRooDataSet_MedIsoMu2_TauDMAntiMedIso_SEP2_WithQCD.root")
 
   for hMass in HMASSES:
      if  hMass== 125: yRange = [20, 150]
@@ -163,6 +181,12 @@ def GetFPSignal(dictionary,xRange=[], yRange=[], rooDataSet=False):
        h_IsoUP      = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMAntiMedIso_SEP2_IsoUP_Plots_fourBody")
        h_PileupDOWN = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMAntiMedIso_SEP2_PileupDOWN_Plots_fourBody")
        h_PileupUP   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMAntiMedIso_SEP2_PileupUP_Plots_fourBody")
+       h_QCD1   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMAntiMedIso_SEP2_QCD1_Plots_fourBody")
+       h_QCD2   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMAntiMedIso_SEP2_QCD2_Plots_fourBody")
+       h_QCD3   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMAntiMedIso_SEP2_QCD3_Plots_fourBody")
+       h_QCD4   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMAntiMedIso_SEP2_QCD4_Plots_fourBody")
+       h_QCD6   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMAntiMedIso_SEP2_QCD6_Plots_fourBody")
+       h_QCD8   = f.Get("SIG_h" + str(hMass) + "a" + str(aMass) + "_MedIsoMu2_TauDMAntiMedIso_SEP2_QCD8_Plots_fourBody")
 
        if not rooDataSet:
            getTH1F(h_Central,    xMin=0, xMax=30, shift='',           name="HToAAH" + str(hMass) + "A" + str(aMass), dic=dictionary, region='FP')
@@ -181,6 +205,12 @@ def GetFPSignal(dictionary,xRange=[], yRange=[], rooDataSet=False):
           h_IsoUP      = getDataset(h_IsoUP,      selection='', xRange=[0,30], yRange=yRange)
           h_PileupDOWN = getDataset(h_PileupDOWN, selection='', xRange=[0,30], yRange=yRange)
           h_PileupUP   = getDataset(h_PileupUP,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD1  = getDataset(h_QCD1,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD2  = getDataset(h_QCD2,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD3  = getDataset(h_QCD3,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD4  = getDataset(h_QCD4,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD6  = getDataset(h_QCD6,   selection='', xRange=[0,30], yRange=yRange)
+          h_QCD8  = getDataset(h_QCD8,   selection='', xRange=[0,30], yRange=yRange)
           dictionary['FP']['']["HToAAH" + str(hMass) + "A" + str(aMass)]           = h_Central
           dictionary['FP']['IDUp']["HToAAH" + str(hMass) + "A" + str(aMass)]       = h_IDUP
           dictionary['FP']['IDDown']["HToAAH" + str(hMass) + "A" + str(aMass)]     = h_IDDOWN
@@ -188,6 +218,13 @@ def GetFPSignal(dictionary,xRange=[], yRange=[], rooDataSet=False):
           dictionary['FP']['IsoDown']["HToAAH" + str(hMass) + "A" + str(aMass)]    = h_IsoDOWN
           dictionary['FP']['PileupUp']["HToAAH" + str(hMass) + "A" + str(aMass)]   = h_PileupUP
           dictionary['FP']['PileupDown']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_PileupDOWN
+          dictionary['FP']['QCD1']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD1
+          dictionary['FP']['QCD2']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD2
+          dictionary['FP']['QCD3']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD3
+          dictionary['FP']['QCD4']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD4
+          dictionary['FP']['QCD6']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD6
+          dictionary['FP']['QCD8']["HToAAH" + str(hMass) + "A" + str(aMass)] = h_QCD8
+          print "TROUBLESHOOT: QCD", type(h_QCD1), type(h_QCD2), type(h_QCD3) 
 
 if not IFCONTROL:
   dictionary = {'PP' : {
@@ -199,7 +236,13 @@ if not IFCONTROL:
                    'IsoUp' : {},
                    'IsoDown' : {},
                    'FakeUp' : {},
-                   'FakeDown' : {}
+                   'FakeDown' : {},
+                   'QCD1'  :  {},
+                   'QCD2'  :  {},
+                   'QCD3'  :  {},
+                   'QCD4'  :  {},
+                   'QCD6'  :  {},
+                   'QCD8'  :  {}
                        },
                 'FP' : {
                    '' : {},
@@ -210,7 +253,13 @@ if not IFCONTROL:
                    'IsoUp' : {},
                    'IsoDown' : {},
                    'FakeUp' : {},
-                   'FakeDown' : {}
+                   'FakeDown' : {},
+                   'QCD1'  :  {},
+                   'QCD2'  :  {},
+                   'QCD3'  :  {},
+                   'QCD4'  :  {},
+                   'QCD6'  :  {},
+                   'QCD8'  :  {}
                        }
                }
 else:
@@ -223,7 +272,13 @@ else:
                    'IsoUp' : {},
                    'IsoDown' : {},
                    'FakeUp' : {},
-                   'FakeDown' : {}
+                   'FakeDown' : {},
+                   'QCD1'  :  {},
+                   'QCD2'  :  {},
+                   'QCD3'  :  {},
+                   'QCD4'  :  {},
+                   'QCD6'  :  {},
+                   'QCD8'  :  {}
                        },
                 'FP' : {
                    '' : {},
@@ -234,7 +289,13 @@ else:
                    'IsoUp' : {},
                    'IsoDown' : {},
                    'FakeUp' : {},
-                   'FakeDown' : {}
+                   'FakeDown' : {},
+                   'QCD1'  :  {},
+                   'QCD2'  :  {},
+                   'QCD3'  :  {},
+                   'QCD4'  :  {},
+                   'QCD6'  :  {},
+                   'QCD8'  :  {}
                        },
                 'control': {'' :{} }
                }
@@ -252,13 +313,19 @@ GetPPData(dictionary,   xRange=XRANGE, yRange=YRANGE, rooDataSet=True)
 GetFPData(dictionary,   xRange=XRANGE, yRange=YRANGE, rooDataSet=True)
 GetFPSignal(dictionary, xRange=XRANGE, yRange=YRANGE, rooDataSet=True)
 
-LimitsClass = HaaLimits2D(dictionary, tag='mumufourBody_SEP5_DG')
+for k,v in dictionary.items():
+  for k1,v1 in dictionary[k].items():
+    for k2,v2 in dictionary[k][k1].items():
+      print k, k1, k2, v2
+
+LimitsClass = HaaLimits2D(dictionary, tag='mumufourBody_SEP5_DG_WithQCD')
 LimitsClass.YRANGE = YRANGE
 LimitsClass.XRANGE = XRANGE
 LimitsClass.UPSILONRANGE = UPSILONRANGE
 LimitsClass.SHIFTS = ['Pileup','ID','Iso','Fake']
 LimitsClass.BACKGROUNDSHIFTS = ['Fake']
 LimitsClass.SIGNALSHIFTS = ['Pileup','ID','Iso']
+LimitsClass.QCDSHIFTS = ['QCD1', 'QCD2', 'QCD3','QCD4','QCD6','QCD8']
 LimitsClass.HMASSES = HMASSES
 LimitsClass.REGIONS = ['FP','PP']
 LimitsClass.AMASSES = AMASSES
@@ -268,8 +335,8 @@ LimitsClass.initializeWorkspace()
 # Devin's code
 ####################################
 if IFCONTROL: LimitsClass.addControlModels(voigtian=True)#, is2D=False)
-LimitsClass.addBackgroundModels(voigtian=True,logy=False,fixAfterControl=IFCONTROL)
-
+LimitsClass.addBackgroundModels(voigtian=True,logy=True,fixAfterControl=IFCONTROL)
+print "TROUBLESHOOT", LimitsClass.histMap
 LimitsClass.XRANGE = [0,30]
 LimitsClass.addSignalModels(fit=False, yFitFuncFP="DG", yFitFuncPP="DG",  isKinFit=False)
 LimitsClass.XRANGE = XRANGE
