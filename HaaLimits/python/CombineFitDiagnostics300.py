@@ -1,0 +1,113 @@
+import os
+import sys
+import logging
+import itertools
+import numpy as np
+import argparse
+import math
+import errno
+
+import ROOT
+ROOT.PyConfig.IgnoreCommandLineOptions = True
+ROOT.gROOT.SetBatch()
+
+f1 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.12341234.root")
+f2 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.2.root")
+f3 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.4444.root")
+f4 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.55555.root")
+f5 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.666666.root")
+f6 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.999999999.root")
+f7 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.7777777.root")
+f8 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.88888888.root")
+f9 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.12.root")
+f10 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.123.root")
+f11 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.1234.root")
+f12 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.12345.root")
+f13 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.123456.root")
+f14 = ROOT.TFile("higgsCombineTest.FitDiagnostics.mH7.1234567.root")
+
+tree1 = f1.Get("limit")
+tree2 = f2.Get("limit")
+tree3 = f3.Get("limit")
+tree4 = f4.Get("limit")
+tree5 = f5.Get("limit")
+tree6 = f6.Get("limit")
+tree7 = f7.Get("limit")
+tree8 = f8.Get("limit")
+tree9 = f9.Get("limit")
+tree10 = f10.Get("limit")
+tree11 = f11.Get("limit")
+tree12 = f12.Get("limit")
+tree13 = f13.Get("limit")
+tree14 = f14.Get("limit")
+
+tree1.Draw("(limit-1)/limitErr>>h1(25,-4,4)", "limitErr>0.001")
+tree2.Draw("(limit-1)/limitErr>>h2(25,-4,4)", "limitErr>0.001")
+tree3.Draw("(limit-1)/limitErr>>h3(25,-4,4)", "limitErr>0.001")
+tree4.Draw("(limit-1)/limitErr>>h4(25,-4,4)", "limitErr>0.001")
+tree5.Draw("(limit-1)/limitErr>>h5(25,-4,4)", "limitErr>0.001")
+tree6.Draw("(limit-1)/limitErr>>h6(25,-4,4)", "limitErr>0.001")
+tree7.Draw("(limit-1)/limitErr>>h7(25,-4,4)", "limitErr>0.001")
+tree8.Draw("(limit-1)/limitErr>>h8(25,-4,4)", "limitErr>0.001")
+tree9.Draw("(limit-1)/limitErr>>h9(25,-4,4)", "limitErr>0.001")
+tree10.Draw("(limit-1)/limitErr>>h10(25,-4,4)", "limitErr>0.001")
+tree11.Draw("(limit-1)/limitErr>>h11(25,-4,4)", "limitErr>0.001")
+tree12.Draw("(limit-1)/limitErr>>h12(25,-4,4)", "limitErr>0.001")
+tree13.Draw("(limit-1)/limitErr>>h13(25,-4,4)", "limitErr>0.001")
+tree14.Draw("(limit-1)/limitErr>>h14(25,-4,4)", "limitErr>0.001")
+
+h1 = ROOT.gDirectory.Get("h1")
+h2 = ROOT.gDirectory.Get("h2")
+h3 = ROOT.gDirectory.Get("h3")
+h4 = ROOT.gDirectory.Get("h4")
+h5 = ROOT.gDirectory.Get("h5")
+h6 = ROOT.gDirectory.Get("h6")
+h7 = ROOT.gDirectory.Get("h7")
+h8 = ROOT.gDirectory.Get("h8")
+h9 = ROOT.gDirectory.Get("h9")
+h10 = ROOT.gDirectory.Get("h10")
+h11 = ROOT.gDirectory.Get("h11")
+h12 = ROOT.gDirectory.Get("h12")
+h13 = ROOT.gDirectory.Get("h13")
+h14 = ROOT.gDirectory.Get("h14")
+
+h = h1.Clone()
+h.Add(h2)
+h.Add(h3)
+h.Add(h4)
+h.Add(h5)
+h.Add(h6)
+h.Add(h7)
+h.Add(h8)
+h.Add(h9)
+h.Add(h10)
+h.Add(h11)
+h.Add(h12)
+h.Add(h13)
+h.Add(h14)
+
+fGaus = ROOT.TF1("fGaus", "gaus", -4, 4)
+
+leg = ROOT.TLegend(.65,.6,.85,.9)
+leg.SetBorderSize(0)
+leg.SetFillColor(0)
+leg.SetFillStyle(0)
+leg.SetTextFont(42)
+leg.SetTextSize(0.035)
+leg.AddEntry(h,     "Bias Pull","L")
+leg.AddEntry(fGaus, "Gaus Fit", "L")
+
+outFile = ROOT.TFile("CombineFitDiagnostics300.root", 'recreate')
+outFile.cd()
+canvas = ROOT.TCanvas('c','c',800,800)
+canvas.cd()
+h.Draw()
+h.Fit(fGaus)
+h.Write()
+leg.Draw()
+canvas.Write()
+canvas.Print("CombineFitDiagnostics300.png")
+
+outFile.Write()
+outFile.Close()
+
